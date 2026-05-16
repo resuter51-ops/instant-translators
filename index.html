@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instant Translators 🌐 - Real-Time Voice Translation</title>
+  <meta property="og:title" content="Instant Translators 🌐" />
+  <meta property="og:description" content="Real-time voice translation in Spanish, French, Haitian Creole & Filipino. Get 1 translator for $9.99 or any 4 for $29.99!" />
+  <meta property="og:image" content="https://media.base44.com/images/public/69b1cf645256e83c174a7c51/0b828e503_generated_image.png" />
+  <meta property="og:url" content="https://instant-translators-bob.netlify.app" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Instant Translators 🌐" />
+  <meta name="twitter:description" content="Real-time voice translation in Spanish, French, Haitian Creole & Filipino. Get 1 for $9.99 or any 4 for $29.99!" />
+  <meta name="twitter:image" content="https://media.base44.com/images/public/69b1cf645256e83c174a7c51/0b828e503_generated_image.png" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      padding-bottom: 60px;
+    }
+    .header {
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px);
+      padding: 24px 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .header .globe { font-size: 2.2rem; margin-bottom: 4px; }
+    .header h1 { font-size: 2rem; color: white; margin: 0 0 6px; font-weight: 900; }
+    .header p { color: rgba(255,255,255,0.8); font-size: 0.95rem; }
+    .pricing {
+      display: flex; gap: 12px; justify-content: center;
+      padding: 20px 16px 0; flex-wrap: wrap;
+    }
+    .price-box {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 16px; padding: 12px 20px; text-align: center;
+    }
+    .price-box.featured {
+      background: linear-gradient(135deg, rgba(243,156,18,0.3), rgba(231,76,60,0.3));
+      border: 2px solid #f39c12; position: relative;
+    }
+    .best-badge {
+      position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+      background: #f39c12; color: white; font-weight: 800; font-size: 0.65rem;
+      padding: 2px 10px; border-radius: 10px; white-space: nowrap;
+    }
+    .price-box .label { color: white; font-weight: 800; font-size: 1.1rem; }
+    .price-box .amount { color: #f39c12; font-weight: 900; font-size: 1.5rem; }
+    .price-box .sub { color: rgba(255,255,255,0.6); font-size: 0.75rem; }
+    .mix-note {
+      max-width: 480px; margin: 16px auto 0; padding: 0 16px;
+    }
+    .mix-note-inner {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px; padding: 12px 16px; text-align: center;
+      color: rgba(255,255,255,0.9); font-size: 0.88rem; font-weight: 600;
+    }
+    .progress {
+      text-align: center; margin: 16px 0 8px;
+      color: rgba(255,255,255,0.7); font-size: 0.9rem; padding: 0 16px;
+    }
+    .progress .highlight { color: #f39c12; }
+    .progress .success { color: #2ecc71; font-weight: 700; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px; padding: 0 16px;
+      max-width: 500px; margin: 0 auto;
+    }
+    .card {
+      border-radius: 20px; padding: 16px 12px; text-align: center;
+      transition: all 0.2s;
+      border: 2px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+    }
+    .card.selected { border: 3px solid white; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .card .flag { font-size: 2.4rem; margin-bottom: 6px; }
+    .card .lang-name { color: white; font-weight: 800; font-size: 1rem; margin-bottom: 2px; }
+    .card .lang-sub { color: rgba(255,255,255,0.7); font-size: 0.75rem; margin-bottom: 12px; }
+    .qty-controls { display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .qty-btn {
+      width: 32px; height: 32px; border-radius: 50%; border: none;
+      background: rgba(255,255,255,0.3); color: white;
+      font-size: 1.2rem; font-weight: 900; cursor: pointer; line-height: 1;
+    }
+    .qty-btn:disabled { background: rgba(255,255,255,0.1); cursor: not-allowed; }
+    .qty-num { color: white; font-weight: 900; font-size: 1.1rem; min-width: 20px; text-align: center; }
+    .checkout-box {
+      max-width: 420px; margin: 24px auto 0; padding: 0 16px;
+    }
+    .checkout-inner {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px; padding: 20px;
+      backdrop-filter: blur(8px);
+    }
+    .checkout-row {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
+    }
+    .checkout-label { color: white; font-weight: 700; font-size: 0.95rem; }
+    .checkout-price { color: #f39c12; font-weight: 900; font-size: 1.3rem; }
+    .btn-main {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+      color: white; border: none; border-radius: 14px;
+      font-size: 1rem; font-weight: 800; cursor: pointer;
+    }
+    .btn-main:disabled { background: #666; cursor: not-allowed; }
+    .email-input {
+      width: 100%; padding: 12px 14px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1); color: white;
+      font-size: 0.95rem; margin-bottom: 10px;
+    }
+    .email-input::placeholder { color: rgba(255,255,255,0.5); }
+    .error-msg { color: #e74c3c; font-size: 0.85rem; margin-top: 8px; text-align: center; }
+    .footer {
+      text-align: center; margin-top: 30px; padding: 0 16px;
+      color: rgba(255,255,255,0.5); font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="globe">🌐</div>
+  <h1>Instant Translators</h1>
+  <p>Real-time voice translation at your fingertips</p>
+</div>
+
+
+<div style="text-align:center; padding: 12px 16px 0;">
+  <a href="/how-it-works" style="display:inline-block; background:rgba(255,255,255,0.1); color:white; text-decoration:none; padding:9px 22px; border-radius:20px; font-size:0.88rem; font-weight:600; border:1px solid rgba(255,255,255,0.25);">ℹ️ How It Works</a>
+</div>
+
+<div class="pricing">
+  <div class="price-box">
+    <div class="label">1 Translator</div>
+    <div class="amount">$9.99</div>
+    <div class="sub">one-time</div>
+  </div>
+  <div class="price-box featured">
+    <div class="best-badge">⭐ BEST VALUE</div>
+    <div class="label">Any 4 Translators</div>
+    <div class="amount">$29.99</div>
+    <div class="sub">save $10 · one-time</div>
+  </div>
+</div>
+
+<div class="mix-note">
+  <div class="mix-note-inner">
+    🎯 Mix &amp; Match any 4 — same language twice, three of one kind, two and two — your choice!
+  </div>
+</div>
+
+<div class="progress" id="progress">Select 1 translator for $9.99 or pick any 4 for $29.99</div>
+
+<div class="cards" id="cards"></div>
+
+<div class="checkout-box" id="checkout-box" style="display:none;">
+  <div class="checkout-inner">
+    <div class="checkout-row">
+      <div class="checkout-label" id="checkout-label"></div>
+      <div class="checkout-price" id="checkout-price"></div>
+    </div>
+    <div id="checkout-step-1">
+      <button class="btn-main" onclick="showEmail()">Continue to Checkout →</button>
+    </div>
+    <div id="checkout-step-2" style="display:none;">
+      <input class="email-input" type="email" id="email-input" placeholder="Enter your email address" />
+      <button class="btn-main" id="pay-btn" onclick="handleCheckout()">Pay Now →</button>
+      <div class="error-msg" id="error-msg"></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">🔒 Secure checkout · One-time payment · Instant access · No login required</div>
+
+<script>
+  const BACKEND_URL = "https://69b1cf645256e83c174a7c51.functions.base44.com/stripeCheckoutInstant";
+  const SINGLE_PRICE_ID = "price_1TVGL7Kb82Tcq0ODRwvoYM2n";
+  const BUNDLE_PRICE_ID = "price_1TVGLCKb82Tcq0OD8LAgkIUr";
+
+  const LANGUAGES = [
+    { id: "spanish", flag: "🇪🇸", name: "Spanish", subtitle: "Español", gradient: "linear-gradient(135deg, #c0392b, #e67e22)" },
+    { id: "french", flag: "🇫🇷", name: "French", subtitle: "Français", gradient: "linear-gradient(135deg, #003189, #c0392b)" },
+    { id: "haitian_creole", flag: "🇭🇹", name: "Haitian Creole", subtitle: "Kreyòl Ayisyen", gradient: "linear-gradient(135deg, #00209F, #D21034)" },
+    { id: "filipino", flag: "🇵🇭", name: "Filipino", subtitle: "Tagalog", gradient: "linear-gradient(135deg, #0038a8, #ce1126)" },
+  ];
+
+  let cart = {};
+
+  function getTotal() {
+    return Object.values(cart).reduce((s, q) => s + q, 0);
+  }
+
+  function renderCards() {
+    const total = getTotal();
+    const container = document.getElementById("cards");
+    container.innerHTML = "";
+    LANGUAGES.forEach(lang => {
+      const qty = cart[lang.id] || 0;
+      const selected = qty > 0;
+      const card = document.createElement("div");
+      card.className = "card" + (selected ? " selected" : "");
+      if (selected) card.style.background = lang.gradient;
+      card.innerHTML = `
+        <div class="flag">${lang.flag}</div>
+        <div class="lang-name">${lang.name}</div>
+        <div class="lang-sub">${lang.subtitle}</div>
+        <div class="qty-controls">
+          <button class="qty-btn" ${qty === 0 ? "disabled" : ""} onclick="removeOne('${lang.id}')">−</button>
+          <span class="qty-num">${qty}</span>
+          <button class="qty-btn" ${total >= 4 ? "disabled" : ""} onclick="addOne('${lang.id}')">+</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+    updateProgress(total);
+    updateCheckout(total);
+  }
+
+  function addOne(id) {
+    if (getTotal() >= 4) return;
+    cart[id] = (cart[id] || 0) + 1;
+    renderCards();
+  }
+
+  function removeOne(id) {
+    if (!cart[id]) return;
+    cart[id]--;
+    if (cart[id] === 0) delete cart[id];
+    renderCards();
+  }
+
+  function updateProgress(total) {
+    const el = document.getElementById("progress");
+    if (total === 0) el.innerHTML = "Select 1 translator for $9.99 or pick any 4 for $29.99";
+    else if (total === 1) el.innerHTML = `✅ 1 selected — <span class="highlight">add 3 more to save $10!</span>`;
+    else if (total === 2) el.innerHTML = `2 selected — <span class="highlight">add 2 more for the bundle deal!</span>`;
+    else if (total === 3) el.innerHTML = `3 selected — <span class="highlight">just 1 more for $29.99! 🔥</span>`;
+    else if (total === 4) el.innerHTML = `<span class="success">🎉 Bundle unlocked! All 4 for $29.99</span>`;
+  }
+
+  function updateCheckout(total) {
+    const box = document.getElementById("checkout-box");
+    const label = document.getElementById("checkout-label");
+    const price = document.getElementById("checkout-price");
+    if (total === 1 || total === 4) {
+      box.style.display = "block";
+      label.textContent = total === 4 ? "Any 4 Translators Bundle" : "1 Translator";
+      price.textContent = total === 4 ? "$29.99" : "$9.99";
+    } else {
+      box.style.display = "none";
+    }
+    document.getElementById("checkout-step-1").style.display = "block";
+    document.getElementById("checkout-step-2").style.display = "none";
+    document.getElementById("error-msg").textContent = "";
+  }
+
+  function showEmail() {
+    document.getElementById("checkout-step-1").style.display = "none";
+    document.getElementById("checkout-step-2").style.display = "block";
+  }
+
+  async function handleCheckout() {
+    const email = document.getElementById("email-input").value.trim();
+    const errEl = document.getElementById("error-msg");
+    const btn = document.getElementById("pay-btn");
+    if (!email || !email.includes("@")) { errEl.textContent = "Please enter a valid email address."; return; }
+    const total = getTotal();
+    const isBundle = total === 4;
+    btn.disabled = true;
+    btn.textContent = "Processing...";
+    errEl.textContent = "";
+    try {
+      const languages = Object.entries(cart).flatMap(([id, qty]) => Array(qty).fill(id));
+      const res = await fetch(BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priceId: isBundle ? BUNDLE_PRICE_ID : SINGLE_PRICE_ID, email, languages, isBundle }),
+      });
+      const data = await res.json();
+      if (data.url) { window.location.href = data.url; }
+      else { errEl.textContent = "Something went wrong. Please try again."; }
+    } catch { errEl.textContent = "Connection error. Please try again."; }
+    finally { btn.disabled = false; btn.textContent = `Pay ${isBundle ? "$29.99" : "$9.99"} →`; }
+  }
+
+  renderCards();
+</script>
+</body>
+</html>
