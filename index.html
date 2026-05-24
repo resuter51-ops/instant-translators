@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Instant Translators 🌐 - Real-Time Voice Translation</title>
   <meta property="og:title" content="Instant Translators 🌐" />
-  <meta property="og:description" content="Real-time voice translation in Spanish, French, Haitian Creole & Filipino. Get 1 translator for $9.99 or any 4 for $29.99!" />
+  <meta property="og:description" content="Real-time voice translation in Spanish, French, Haitian Creole & Filipino. 1 for $9.99 · Any 4 for $29.99 · Business (20 users) $99.99!" />
   <meta property="og:image" content="https://media.base44.com/images/public/69b1cf645256e83c174a7c51/0b828e503_generated_image.png" />
   <meta property="og:url" content="https://instant-translators-bob.netlify.app" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Instant Translators 🌐" />
-  <meta name="twitter:description" content="Real-time voice translation in Spanish, French, Haitian Creole & Filipino. Get 1 for $9.99 or any 4 for $29.99!" />
+  <meta name="twitter:description" content="Real-time voice translation in Spanish, French, Haitian Creole & Filipino. 1 for $9.99 · Any 4 for $29.99 · Business $99.99!" />
   <meta name="twitter:image" content="https://media.base44.com/images/public/69b1cf645256e83c174a7c51/0b828e503_generated_image.png" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,29 +31,60 @@
     .header .globe { font-size: 2.2rem; margin-bottom: 4px; }
     .header h1 { font-size: 2rem; color: white; margin: 0 0 6px; font-weight: 900; }
     .header p { color: rgba(255,255,255,0.8); font-size: 0.95rem; }
+
+    /* PRICING TIERS */
     .pricing {
-      display: flex; gap: 12px; justify-content: center;
-      padding: 20px 16px 0; flex-wrap: wrap;
+      display: flex; gap: 10px; justify-content: center;
+      padding: 20px 12px 0; flex-wrap: wrap;
     }
     .price-box {
       background: rgba(255,255,255,0.1);
       border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 16px; padding: 12px 20px; text-align: center;
+      border-radius: 16px; padding: 12px 16px; text-align: center;
+      min-width: 110px; position: relative;
     }
     .price-box.featured {
       background: linear-gradient(135deg, rgba(243,156,18,0.3), rgba(231,76,60,0.3));
-      border: 2px solid #f39c12; position: relative;
+      border: 2px solid #f39c12;
+    }
+    .price-box.business {
+      background: linear-gradient(135deg, rgba(46,204,113,0.25), rgba(52,152,219,0.25));
+      border: 2px solid #2ecc71;
     }
     .best-badge {
       position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-      background: #f39c12; color: white; font-weight: 800; font-size: 0.65rem;
-      padding: 2px 10px; border-radius: 10px; white-space: nowrap;
+      background: #f39c12; color: white; font-weight: 800; font-size: 0.62rem;
+      padding: 2px 8px; border-radius: 10px; white-space: nowrap;
     }
-    .price-box .label { color: white; font-weight: 800; font-size: 1.1rem; }
-    .price-box .amount { color: #f39c12; font-weight: 900; font-size: 1.5rem; }
-    .price-box .sub { color: rgba(255,255,255,0.6); font-size: 0.75rem; }
+    .biz-badge {
+      position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+      background: #2ecc71; color: white; font-weight: 800; font-size: 0.62rem;
+      padding: 2px 8px; border-radius: 10px; white-space: nowrap;
+    }
+    .price-box .label { color: white; font-weight: 800; font-size: 0.95rem; }
+    .price-box .amount { color: #f39c12; font-weight: 900; font-size: 1.4rem; }
+    .price-box.business .amount { color: #2ecc71; }
+    .price-box .sub { color: rgba(255,255,255,0.6); font-size: 0.72rem; }
+
+    /* BUSINESS BUY BUTTON */
+    .biz-section {
+      max-width: 480px; margin: 18px auto 0; padding: 0 16px;
+    }
+    .biz-inner {
+      background: linear-gradient(135deg, rgba(46,204,113,0.15), rgba(52,152,219,0.15));
+      border: 1px solid rgba(46,204,113,0.4);
+      border-radius: 16px; padding: 16px 20px; text-align: center;
+    }
+    .biz-inner p { color: rgba(255,255,255,0.85); font-size: 0.88rem; margin-bottom: 12px; }
+    .biz-btn {
+      display: inline-block; padding: 11px 28px;
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+      color: white; border: none; border-radius: 12px;
+      font-size: 0.95rem; font-weight: 800; cursor: pointer; text-decoration: none;
+    }
+
     .mix-note {
-      max-width: 480px; margin: 16px auto 0; padding: 0 16px;
+      max-width: 480px; margin: 14px auto 0; padding: 0 16px;
     }
     .mix-note-inner {
       background: rgba(255,255,255,0.08);
@@ -134,11 +165,11 @@
   <p>Real-time voice translation at your fingertips</p>
 </div>
 
-
 <div style="text-align:center; padding: 12px 16px 0;">
   <a href="/how-it-works" style="display:inline-block; background:rgba(255,255,255,0.1); color:white; text-decoration:none; padding:9px 22px; border-radius:20px; font-size:0.88rem; font-weight:600; border:1px solid rgba(255,255,255,0.25);">ℹ️ How It Works</a>
 </div>
 
+<!-- THREE PRICING TIERS -->
 <div class="pricing">
   <div class="price-box">
     <div class="label">1 Translator</div>
@@ -150,6 +181,20 @@
     <div class="label">Any 4 Translators</div>
     <div class="amount">$29.99</div>
     <div class="sub">save $10 · one-time</div>
+  </div>
+  <div class="price-box business">
+    <div class="biz-badge">🏢 BUSINESS</div>
+    <div class="label">20 Users</div>
+    <div class="amount">$99.99</div>
+    <div class="sub">$5/user · one-time</div>
+  </div>
+</div>
+
+<!-- BUSINESS LICENSE SECTION -->
+<div class="biz-section">
+  <div class="biz-inner">
+    <p>🏥 Perfect for nursing homes, hotels, schools & businesses. All 4 languages · Up to 20 staff members · One-time fee · No subscriptions.</p>
+    <button class="biz-btn" onclick="handleBusinessCheckout()">Get Business License — $99.99 →</button>
   </div>
 </div>
 
@@ -180,18 +225,31 @@
   </div>
 </div>
 
+<!-- BUSINESS CHECKOUT MODAL -->
+<div id="biz-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:100; align-items:center; justify-content:center;">
+  <div style="background:#1a2744; border:1px solid rgba(46,204,113,0.4); border-radius:20px; padding:28px; max-width:360px; width:90%; margin:auto;">
+    <h2 style="color:white; font-size:1.2rem; margin-bottom:6px;">🏢 Business License</h2>
+    <p style="color:rgba(255,255,255,0.7); font-size:0.85rem; margin-bottom:16px;">All 4 languages · Up to 20 users · $99.99 one-time</p>
+    <input class="email-input" type="email" id="biz-email" placeholder="Enter your business email" />
+    <button class="btn-main" id="biz-pay-btn" onclick="submitBusinessCheckout()" style="background:linear-gradient(135deg,#2ecc71,#27ae60); margin-top:4px;">Pay $99.99 →</button>
+    <div class="error-msg" id="biz-error"></div>
+    <button onclick="document.getElementById('biz-modal').style.display='none'" style="width:100%; margin-top:10px; background:none; border:none; color:rgba(255,255,255,0.4); cursor:pointer; font-size:0.85rem;">Cancel</button>
+  </div>
+</div>
+
 <div class="footer">🔒 Secure checkout · One-time payment · Instant access · No login required</div>
 
 <script>
   const BACKEND_URL = "https://69b1cf645256e83c174a7c51.functions.base44.com/stripeCheckoutInstant";
-  const SINGLE_PRICE_ID = "price_1TVGL7Kb82Tcq0ODRwvoYM2n";
-  const BUNDLE_PRICE_ID = "price_1TVGLCKb82Tcq0OD8LAgkIUr";
+  const SINGLE_PRICE_ID  = "price_1TVGL7Kb82Tcq0ODRwvoYM2n";
+  const BUNDLE_PRICE_ID  = "price_1TVGLCKb82Tcq0OD8LAgkIUr";
+  const BUSINESS_PRICE_ID = "price_BUSINESS_PLACEHOLDER"; // replace after creating Stripe price
 
   const LANGUAGES = [
-    { id: "spanish", flag: "🇪🇸", name: "Spanish", subtitle: "Español", gradient: "linear-gradient(135deg, #c0392b, #e67e22)" },
-    { id: "french", flag: "🇫🇷", name: "French", subtitle: "Français", gradient: "linear-gradient(135deg, #003189, #c0392b)" },
-    { id: "haitian_creole", flag: "🇭🇹", name: "Haitian Creole", subtitle: "Kreyòl Ayisyen", gradient: "linear-gradient(135deg, #00209F, #D21034)" },
-    { id: "filipino", flag: "🇵🇭", name: "Filipino", subtitle: "Tagalog", gradient: "linear-gradient(135deg, #0038a8, #ce1126)" },
+    { id: "spanish",        flag: "🇪🇸", name: "Spanish",        subtitle: "Español",          gradient: "linear-gradient(135deg, #c0392b, #e67e22)" },
+    { id: "french",         flag: "🇫🇷", name: "French",          subtitle: "Français",         gradient: "linear-gradient(135deg, #003189, #c0392b)" },
+    { id: "haitian_creole", flag: "🇭🇹", name: "Haitian Creole",  subtitle: "Kreyòl Ayisyen",   gradient: "linear-gradient(135deg, #00209F, #D21034)" },
+    { id: "filipino",       flag: "🇵🇭", name: "Filipino",        subtitle: "Tagalog",          gradient: "linear-gradient(135deg, #0038a8, #ce1126)" },
   ];
 
   let cart = {};
@@ -291,6 +349,34 @@
       else { errEl.textContent = "Something went wrong. Please try again."; }
     } catch { errEl.textContent = "Connection error. Please try again."; }
     finally { btn.disabled = false; btn.textContent = `Pay ${isBundle ? "$29.99" : "$9.99"} →`; }
+  }
+
+  function handleBusinessCheckout() {
+    document.getElementById("biz-modal").style.display = "flex";
+    document.getElementById("biz-email").value = "";
+    document.getElementById("biz-error").textContent = "";
+  }
+
+  async function submitBusinessCheckout() {
+    const email = document.getElementById("biz-email").value.trim();
+    const errEl = document.getElementById("biz-error");
+    const btn = document.getElementById("biz-pay-btn");
+    if (!email || !email.includes("@")) { errEl.textContent = "Please enter a valid email address."; return; }
+    btn.disabled = true;
+    btn.textContent = "Processing...";
+    errEl.textContent = "";
+    try {
+      const allLangs = ["spanish","french","haitian_creole","filipino"];
+      const res = await fetch(BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priceId: BUSINESS_PRICE_ID, email, languages: allLangs, isBusiness: true }),
+      });
+      const data = await res.json();
+      if (data.url) { window.location.href = data.url; }
+      else { errEl.textContent = "Something went wrong. Please try again."; }
+    } catch { errEl.textContent = "Connection error. Please try again."; }
+    finally { btn.disabled = false; btn.textContent = "Pay $99.99 →"; }
   }
 
   renderCards();
