@@ -32,7 +32,6 @@
     .header h1 { font-size: 2rem; color: white; margin: 0 0 6px; font-weight: 900; }
     .header p { color: rgba(255,255,255,0.8); font-size: 0.95rem; }
 
-    /* PRICING TIERS */
     .pricing {
       display: flex; gap: 10px; justify-content: center;
       padding: 20px 12px 0; flex-wrap: wrap;
@@ -66,7 +65,6 @@
     .price-box.business .amount { color: #2ecc71; }
     .price-box .sub { color: rgba(255,255,255,0.6); font-size: 0.72rem; }
 
-    /* BUSINESS BUY BUTTON */
     .biz-section {
       max-width: 480px; margin: 18px auto 0; padding: 0 16px;
     }
@@ -82,7 +80,6 @@
       color: white; border: none; border-radius: 12px;
       font-size: 0.95rem; font-weight: 800; cursor: pointer; text-decoration: none;
     }
-
     .mix-note {
       max-width: 480px; margin: 14px auto 0; padding: 0 16px;
     }
@@ -155,6 +152,64 @@
       text-align: center; margin-top: 30px; padding: 0 16px;
       color: rgba(255,255,255,0.5); font-size: 0.75rem;
     }
+
+    /* BUSINESS MODAL */
+    .biz-modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75); z-index: 100;
+      align-items: center; justify-content: center;
+      padding: 16px;
+    }
+    .biz-modal-box {
+      background: #1a2744;
+      border: 1px solid rgba(46,204,113,0.4);
+      border-radius: 20px; padding: 24px;
+      max-width: 400px; width: 100%;
+      max-height: 90vh; overflow-y: auto;
+    }
+    .biz-modal-box h2 { color: white; font-size: 1.2rem; margin-bottom: 4px; }
+    .biz-modal-box .subtitle { color: rgba(255,255,255,0.6); font-size: 0.82rem; margin-bottom: 16px; }
+    .biz-lang-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-bottom: 16px;
+    }
+    .biz-lang-card {
+      background: rgba(255,255,255,0.07);
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 14px; padding: 12px 8px; text-align: center;
+    }
+    .biz-lang-card.selected {
+      border-color: #2ecc71;
+      background: rgba(46,204,113,0.15);
+    }
+    .biz-lang-card .bflag { font-size: 1.8rem; margin-bottom: 4px; }
+    .biz-lang-card .bname { color: white; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; }
+    .biz-qty-controls { display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .biz-qty-btn {
+      width: 28px; height: 28px; border-radius: 50%; border: none;
+      background: rgba(255,255,255,0.25); color: white;
+      font-size: 1.1rem; font-weight: 900; cursor: pointer; line-height: 1;
+    }
+    .biz-qty-btn:disabled { background: rgba(255,255,255,0.08); cursor: not-allowed; }
+    .biz-qty-num { color: white; font-weight: 900; font-size: 1rem; min-width: 18px; text-align: center; }
+    .biz-counter {
+      text-align: center; margin-bottom: 14px;
+      font-size: 0.9rem; font-weight: 700;
+    }
+    .biz-counter.full { color: #2ecc71; }
+    .biz-counter.partial { color: #f39c12; }
+    .biz-counter.empty { color: rgba(255,255,255,0.5); }
+    .biz-pay-btn {
+      width: 100%; padding: 13px;
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+      color: white; border: none; border-radius: 14px;
+      font-size: 1rem; font-weight: 800; cursor: pointer; margin-top: 4px;
+    }
+    .biz-pay-btn:disabled { background: #555; cursor: not-allowed; }
+    .biz-cancel-btn {
+      width: 100%; margin-top: 10px; background: none; border: none;
+      color: rgba(255,255,255,0.4); cursor: pointer; font-size: 0.85rem;
+    }
   </style>
 </head>
 <body>
@@ -193,8 +248,8 @@
 <!-- BUSINESS LICENSE SECTION -->
 <div class="biz-section">
   <div class="biz-inner">
-    <p>🏥 Perfect for nursing homes, hotels, schools & businesses. All 4 languages · Up to 20 staff members · One-time fee · No subscriptions.</p>
-    <button class="biz-btn" onclick="handleBusinessCheckout()">Get Business License — $99.99 →</button>
+    <p>🏥 Perfect for nursing homes, hotels, schools & businesses.<br>Mix &amp; match languages · Up to 20 staff · One-time fee · No subscriptions.</p>
+    <button class="biz-btn" onclick="openBizModal()">Get Business License — $99.99 →</button>
   </div>
 </div>
 
@@ -205,7 +260,6 @@
 </div>
 
 <div class="progress" id="progress">Select 1 translator for $9.99 or pick any 4 for $29.99</div>
-
 <div class="cards" id="cards"></div>
 
 <div class="checkout-box" id="checkout-box" style="display:none;">
@@ -225,38 +279,43 @@
   </div>
 </div>
 
-<!-- BUSINESS CHECKOUT MODAL -->
-<div id="biz-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:100; align-items:center; justify-content:center;">
-  <div style="background:#1a2744; border:1px solid rgba(46,204,113,0.4); border-radius:20px; padding:28px; max-width:360px; width:90%; margin:auto;">
-    <h2 style="color:white; font-size:1.2rem; margin-bottom:6px;">🏢 Business License</h2>
-    <p style="color:rgba(255,255,255,0.7); font-size:0.85rem; margin-bottom:16px;">All 4 languages · Up to 20 users · $99.99 one-time</p>
+<!-- BUSINESS MODAL -->
+<div class="biz-modal-overlay" id="biz-modal">
+  <div class="biz-modal-box">
+    <h2>🏢 Business License — $99.99</h2>
+    <div class="subtitle">Mix &amp; match up to 20 language slots for your team. Any combo!</div>
+
+    <div class="biz-lang-grid" id="biz-lang-grid"></div>
+
+    <div class="biz-counter" id="biz-counter">0 of 20 slots selected</div>
+
     <input class="email-input" type="email" id="biz-email" placeholder="Enter your business email" />
-    <button class="btn-main" id="biz-pay-btn" onclick="submitBusinessCheckout()" style="background:linear-gradient(135deg,#2ecc71,#27ae60); margin-top:4px;">Pay $99.99 →</button>
+    <button class="biz-pay-btn" id="biz-pay-btn" onclick="submitBusinessCheckout()">Pay $99.99 →</button>
     <div class="error-msg" id="biz-error"></div>
-    <button onclick="document.getElementById('biz-modal').style.display='none'" style="width:100%; margin-top:10px; background:none; border:none; color:rgba(255,255,255,0.4); cursor:pointer; font-size:0.85rem;">Cancel</button>
+    <button class="biz-cancel-btn" onclick="closeBizModal()">Cancel</button>
   </div>
 </div>
 
 <div class="footer">🔒 Secure checkout · One-time payment · Instant access · No login required</div>
 
 <script>
-  const BACKEND_URL = "https://69b1cf645256e83c174a7c51.functions.base44.com/stripeCheckoutInstant";
+  const BACKEND_URL     = "https://69b1cf645256e83c174a7c51.functions.base44.com/stripeCheckoutInstant";
   const SINGLE_PRICE_ID  = "price_1TVGL7Kb82Tcq0ODRwvoYM2n";
   const BUNDLE_PRICE_ID  = "price_1TVGLCKb82Tcq0OD8LAgkIUr";
-  const BUSINESS_PRICE_ID = "price_1TakroKb82Tcq0ODyA2zU9Of"; // replace after creating Stripe price
+  const BUSINESS_PRICE_ID = "price_1TakroKb82Tcq0ODyA2zU9Of";
+  const BIZ_MAX = 20;
 
   const LANGUAGES = [
-    { id: "spanish",        flag: "🇪🇸", name: "Spanish",        subtitle: "Español",          gradient: "linear-gradient(135deg, #c0392b, #e67e22)" },
-    { id: "french",         flag: "🇫🇷", name: "French",          subtitle: "Français",         gradient: "linear-gradient(135deg, #003189, #c0392b)" },
-    { id: "haitian_creole", flag: "🇭🇹", name: "Haitian Creole",  subtitle: "Kreyòl Ayisyen",   gradient: "linear-gradient(135deg, #00209F, #D21034)" },
-    { id: "filipino",       flag: "🇵🇭", name: "Filipino",        subtitle: "Tagalog",          gradient: "linear-gradient(135deg, #0038a8, #ce1126)" },
+    { id: "spanish",        flag: "🇪🇸", name: "Spanish",        subtitle: "Español",        gradient: "linear-gradient(135deg,#c0392b,#e67e22)" },
+    { id: "french",         flag: "🇫🇷", name: "French",          subtitle: "Français",       gradient: "linear-gradient(135deg,#003189,#c0392b)" },
+    { id: "haitian_creole", flag: "🇭🇹", name: "Haitian Creole",  subtitle: "Kreyòl Ayisyen", gradient: "linear-gradient(135deg,#00209F,#D21034)" },
+    { id: "filipino",       flag: "🇵🇭", name: "Filipino",        subtitle: "Tagalog",        gradient: "linear-gradient(135deg,#0038a8,#ce1126)" },
   ];
 
+  /* ── Individual cart ── */
   let cart = {};
 
-  function getTotal() {
-    return Object.values(cart).reduce((s, q) => s + q, 0);
-  }
+  function getTotal() { return Object.values(cart).reduce((s,q) => s+q, 0); }
 
   function renderCards() {
     const total = getTotal();
@@ -264,59 +323,43 @@
     container.innerHTML = "";
     LANGUAGES.forEach(lang => {
       const qty = cart[lang.id] || 0;
-      const selected = qty > 0;
       const card = document.createElement("div");
-      card.className = "card" + (selected ? " selected" : "");
-      if (selected) card.style.background = lang.gradient;
+      card.className = "card" + (qty > 0 ? " selected" : "");
+      if (qty > 0) card.style.background = lang.gradient;
       card.innerHTML = `
         <div class="flag">${lang.flag}</div>
         <div class="lang-name">${lang.name}</div>
         <div class="lang-sub">${lang.subtitle}</div>
         <div class="qty-controls">
-          <button class="qty-btn" ${qty === 0 ? "disabled" : ""} onclick="removeOne('${lang.id}')">−</button>
+          <button class="qty-btn" ${qty===0?"disabled":""} onclick="removeOne('${lang.id}')">−</button>
           <span class="qty-num">${qty}</span>
-          <button class="qty-btn" ${total >= 4 ? "disabled" : ""} onclick="addOne('${lang.id}')">+</button>
-        </div>
-      `;
+          <button class="qty-btn" ${total>=4?"disabled":""} onclick="addOne('${lang.id}')">+</button>
+        </div>`;
       container.appendChild(card);
     });
     updateProgress(total);
     updateCheckout(total);
   }
 
-  function addOne(id) {
-    if (getTotal() >= 4) return;
-    cart[id] = (cart[id] || 0) + 1;
-    renderCards();
-  }
-
-  function removeOne(id) {
-    if (!cart[id]) return;
-    cart[id]--;
-    if (cart[id] === 0) delete cart[id];
-    renderCards();
-  }
+  function addOne(id) { if (getTotal()>=4) return; cart[id]=(cart[id]||0)+1; renderCards(); }
+  function removeOne(id) { if (!cart[id]) return; cart[id]--; if(!cart[id]) delete cart[id]; renderCards(); }
 
   function updateProgress(total) {
     const el = document.getElementById("progress");
-    if (total === 0) el.innerHTML = "Select 1 translator for $9.99 or pick any 4 for $29.99";
-    else if (total === 1) el.innerHTML = `✅ 1 selected — <span class="highlight">add 3 more to save $10!</span>`;
-    else if (total === 2) el.innerHTML = `2 selected — <span class="highlight">add 2 more for the bundle deal!</span>`;
-    else if (total === 3) el.innerHTML = `3 selected — <span class="highlight">just 1 more for $29.99! 🔥</span>`;
-    else if (total === 4) el.innerHTML = `<span class="success">🎉 Bundle unlocked! All 4 for $29.99</span>`;
+    if (total===0) el.innerHTML = "Select 1 translator for $9.99 or pick any 4 for $29.99";
+    else if (total===1) el.innerHTML = `✅ 1 selected — <span class="highlight">add 3 more to save $10!</span>`;
+    else if (total===2) el.innerHTML = `2 selected — <span class="highlight">add 2 more for the bundle deal!</span>`;
+    else if (total===3) el.innerHTML = `3 selected — <span class="highlight">just 1 more for $29.99! 🔥</span>`;
+    else if (total===4) el.innerHTML = `<span class="success">🎉 Bundle unlocked! All 4 for $29.99</span>`;
   }
 
   function updateCheckout(total) {
     const box = document.getElementById("checkout-box");
-    const label = document.getElementById("checkout-label");
-    const price = document.getElementById("checkout-price");
-    if (total === 1 || total === 4) {
+    if (total===1||total===4) {
       box.style.display = "block";
-      label.textContent = total === 4 ? "Any 4 Translators Bundle" : "1 Translator";
-      price.textContent = total === 4 ? "$29.99" : "$9.99";
-    } else {
-      box.style.display = "none";
-    }
+      document.getElementById("checkout-label").textContent = total===4 ? "Any 4 Translators Bundle" : "1 Translator";
+      document.getElementById("checkout-price").textContent = total===4 ? "$29.99" : "$9.99";
+    } else { box.style.display = "none"; }
     document.getElementById("checkout-step-1").style.display = "block";
     document.getElementById("checkout-step-2").style.display = "none";
     document.getElementById("error-msg").textContent = "";
@@ -330,53 +373,81 @@
   async function handleCheckout() {
     const email = document.getElementById("email-input").value.trim();
     const errEl = document.getElementById("error-msg");
-    const btn = document.getElementById("pay-btn");
-    if (!email || !email.includes("@")) { errEl.textContent = "Please enter a valid email address."; return; }
-    const total = getTotal();
-    const isBundle = total === 4;
-    btn.disabled = true;
-    btn.textContent = "Processing...";
-    errEl.textContent = "";
+    const btn   = document.getElementById("pay-btn");
+    if (!email||!email.includes("@")) { errEl.textContent="Please enter a valid email address."; return; }
+    const total = getTotal(); const isBundle = total===4;
+    btn.disabled=true; btn.textContent="Processing..."; errEl.textContent="";
     try {
-      const languages = Object.entries(cart).flatMap(([id, qty]) => Array(qty).fill(id));
-      const res = await fetch(BACKEND_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ priceId: isBundle ? BUNDLE_PRICE_ID : SINGLE_PRICE_ID, email, languages, isBundle }),
-      });
+      const languages = Object.entries(cart).flatMap(([id,qty])=>Array(qty).fill(id));
+      const res = await fetch(BACKEND_URL,{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({priceId:isBundle?BUNDLE_PRICE_ID:SINGLE_PRICE_ID,email,languages,isBundle})});
       const data = await res.json();
-      if (data.url) { window.location.href = data.url; }
-      else { errEl.textContent = "Something went wrong. Please try again."; }
-    } catch { errEl.textContent = "Connection error. Please try again."; }
-    finally { btn.disabled = false; btn.textContent = `Pay ${isBundle ? "$29.99" : "$9.99"} →`; }
+      if (data.url) window.location.href=data.url;
+      else errEl.textContent="Something went wrong. Please try again.";
+    } catch { errEl.textContent="Connection error. Please try again."; }
+    finally { btn.disabled=false; btn.textContent=`Pay ${isBundle?"$29.99":"$9.99"} →`; }
   }
 
-  function handleBusinessCheckout() {
-    document.getElementById("biz-modal").style.display = "flex";
+  /* ── Business cart ── */
+  let bizCart = {};
+
+  function getBizTotal() { return Object.values(bizCart).reduce((s,q)=>s+q,0); }
+
+  function renderBizGrid() {
+    const total = getBizTotal();
+    const grid  = document.getElementById("biz-lang-grid");
+    grid.innerHTML = "";
+    LANGUAGES.forEach(lang => {
+      const qty = bizCart[lang.id] || 0;
+      const card = document.createElement("div");
+      card.className = "biz-lang-card" + (qty>0?" selected":"");
+      card.innerHTML = `
+        <div class="bflag">${lang.flag}</div>
+        <div class="bname">${lang.name}</div>
+        <div class="biz-qty-controls">
+          <button class="biz-qty-btn" ${qty===0?"disabled":""} onclick="bizRemove('${lang.id}')">−</button>
+          <span class="biz-qty-num">${qty}</span>
+          <button class="biz-qty-btn" ${total>=BIZ_MAX?"disabled":""} onclick="bizAdd('${lang.id}')">+</button>
+        </div>`;
+      grid.appendChild(card);
+    });
+    const counter = document.getElementById("biz-counter");
+    counter.textContent = `${total} of ${BIZ_MAX} slots selected`;
+    counter.className = "biz-counter " + (total===BIZ_MAX?"full":total>0?"partial":"empty");
+    document.getElementById("biz-pay-btn").disabled = total === 0;
+  }
+
+  function bizAdd(id) { if(getBizTotal()>=BIZ_MAX) return; bizCart[id]=(bizCart[id]||0)+1; renderBizGrid(); }
+  function bizRemove(id) { if(!bizCart[id]) return; bizCart[id]--; if(!bizCart[id]) delete bizCart[id]; renderBizGrid(); }
+
+  function openBizModal() {
+    bizCart = {};
     document.getElementById("biz-email").value = "";
     document.getElementById("biz-error").textContent = "";
+    renderBizGrid();
+    document.getElementById("biz-modal").style.display = "flex";
+  }
+
+  function closeBizModal() {
+    document.getElementById("biz-modal").style.display = "none";
   }
 
   async function submitBusinessCheckout() {
     const email = document.getElementById("biz-email").value.trim();
     const errEl = document.getElementById("biz-error");
-    const btn = document.getElementById("biz-pay-btn");
-    if (!email || !email.includes("@")) { errEl.textContent = "Please enter a valid email address."; return; }
-    btn.disabled = true;
-    btn.textContent = "Processing...";
-    errEl.textContent = "";
+    const btn   = document.getElementById("biz-pay-btn");
+    if (!email||!email.includes("@")) { errEl.textContent="Please enter a valid email address."; return; }
+    if (getBizTotal()===0) { errEl.textContent="Please select at least one language slot."; return; }
+    btn.disabled=true; btn.textContent="Processing..."; errEl.textContent="";
     try {
-      const allLangs = ["spanish","french","haitian_creole","filipino"];
-      const res = await fetch(BACKEND_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ priceId: BUSINESS_PRICE_ID, email, languages: allLangs, isBusiness: true }),
-      });
+      const languages = Object.entries(bizCart).flatMap(([id,qty])=>Array(qty).fill(id));
+      const res = await fetch(BACKEND_URL,{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({priceId:BUSINESS_PRICE_ID,email,languages,isBusiness:true})});
       const data = await res.json();
-      if (data.url) { window.location.href = data.url; }
-      else { errEl.textContent = "Something went wrong. Please try again."; }
-    } catch { errEl.textContent = "Connection error. Please try again."; }
-    finally { btn.disabled = false; btn.textContent = "Pay $99.99 →"; }
+      if (data.url) window.location.href=data.url;
+      else errEl.textContent="Something went wrong. Please try again.";
+    } catch { errEl.textContent="Connection error. Please try again."; }
+    finally { btn.disabled=false; btn.textContent="Pay $99.99 →"; }
   }
 
   renderCards();
